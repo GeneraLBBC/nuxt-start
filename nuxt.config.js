@@ -1,4 +1,4 @@
-// nuxt config
+// nuxt 45867945764576
 
 export default {
   mode: 'spa',
