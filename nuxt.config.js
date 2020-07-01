@@ -1,3 +1,5 @@
+// nuxt config
+
 export default {
   mode: 'spa',
   head: {
