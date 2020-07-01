@@ -1,0 +1,17 @@
+* {
+  font-family: Arial;
+}
+
+.usersStyle ul li a{
+  font-weight: bold !important;
+  font-size: 20px !important;
+}
+.usersStyle ul li {
+  margin: 15px 0 15px 0;
+}
+.usersStyle ul li a:hover {
+  color:  #0000ff;
+}
+
+
+
