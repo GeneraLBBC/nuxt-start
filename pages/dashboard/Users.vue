@@ -1,41 +1,31 @@
 <template>
-  <v-app app>
-    <h1>{{ pageTitle }}</h1>
-    <hr>
-    <v-container fluid>
-      <div class="block">
-        <ol>
-          <li
-            v-for="user in users"
-            :key="user"
-          >
-            <a @click="goTo(user)">
-              {{ user.name }} <br>
-              {{ user.email }} <br>
-              <hr>
-            </a>
-          </li>
-        </ol>
-      </div>
+  <v-row>
+    <v-col lg="12">
+      <h1 style="text-align: center">{{ pageTitle }}</h1>
+    </v-col>
+    <v-col lg="6" offset-lg="3">
+      <v-list three-line elevation="5">
+        <v-list-item
+          v-for="item in users"
+          :key="item.username"
+          nuxt
+          :to="{name: 'user_view', params:{id: item.id}}"
+        >
+          <v-list-item-avatar>
+            <v-img :src="`https://randomuser.me/api/portraits/men/${item.id}.jpg`"></v-img>
+          </v-list-item-avatar>
 
-      <div class="block2">
-        <!-- <ol>
-          <li
-            v-for="post in posts"
-            :key="post"
-          >
-            <a @click="goTo(post)">
-              {{ post.userId }} <br>
-              {{ post.title }} <br>
-              <hr>
-            </a>
-          </li>
-        </ol> -->
-        <nuxt/>
-      </div>
-    </v-container>
-    
-  </v-app>
+          <v-list-item-content>
+            <v-list-item-title>{{ `${item.name} (${item.username})` }}</v-list-item-title>
+            <v-list-item-subtitle>
+              E-mail: {{ item.email }}<br/>
+              Phone: {{ item.phone }}
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -43,22 +33,13 @@ export default {
   name: 'users',
   async asyncData({$axios, error, params}) {
     let users = await $axios.$get('https://jsonplaceholder.typicode.com/users')
-    let posts = await $axios.$get('https://jsonplaceholder.typicode.com/posts?userId=1')
-    
     return {
-      users,
-      posts
+      users
     }
   },
-  
   data: () => ({
     pageTitle: 'Users page'
   }),
-  methods: {
-    goTo (user) {
-      this.$router.push('/users/' + user.id)
-    }
-  }
 }
 </script>
 

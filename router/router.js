@@ -21,13 +21,9 @@ export function createRouter () {
         path: '/users',
         name: 'users',
         component:() => import('@/pages/dashboard/Users.vue').then(m => m.default || m),
-        // children: [
-        //   { path: '/users/:_id', name: 'id',
-        //     component: () => import('@/pages/dashboard/_id.vue').then(m => m.default || m)
-        //   }
-        // ]
       },
-      { path: '/users/:_id', name: 'id',
+      { path: '/users/:id',
+        name: 'user_view',
         component: () => import('@/pages/dashboard/_id.vue').then(m => m.default || m)
       },
       {
