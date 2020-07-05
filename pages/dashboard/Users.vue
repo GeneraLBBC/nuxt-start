@@ -19,7 +19,7 @@
       </div>
 
       <div class="block2">
-        <ol>
+        <!-- <ol>
           <li
             v-for="post in posts"
             :key="post"
@@ -30,7 +30,8 @@
               <hr>
             </a>
           </li>
-        </ol>
+        </ol> -->
+        <nuxt/>
       </div>
     </v-container>
     
@@ -49,28 +50,13 @@ export default {
       posts
     }
   },
-  async asyncData({$axios, error, params}) {
-    let post = await $axios.$get(`https://jsonplaceholder.typicode.com/posts/${params.id}`)
-    .then(post => {
-      return {post}
-    })
-    .catch(err => {
-      error(err)
-    })
-
-    // try {
-    //   const post = await $axios.$get(`https://jsonplaceholder.typicode.com/posts/${params.id}`)
-    //   return {post}
-    // } catch(e) {
-    //   error(e)
-    // }
-  },
+  
   data: () => ({
     pageTitle: 'Users page'
   }),
   methods: {
-    goTo (user, post) {
-      this.$router.push('/posts/' + post.id)
+    goTo (user) {
+      this.$router.push('/users/' + user.id)
     }
   }
 }
