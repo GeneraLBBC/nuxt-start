@@ -2,6 +2,8 @@
   <v-row>
     <v-col lg="12">
       <h1 style="text-align: center">{{ pageTitle }}</h1>
+      <v-btn @click="setUsersList([])">Clear list</v-btn>
+      <v-btn @click="updateUsersList">Update list</v-btn>
     </v-col>
     <v-col lg="6" offset-lg="3">
       <v-list three-line elevation="5">
@@ -14,7 +16,6 @@
           <v-list-item-avatar>
             <v-img :src="`https://randomuser.me/api/portraits/men/${item.id}.jpg`"></v-img>
           </v-list-item-avatar>
-
           <v-list-item-content>
             <v-list-item-title>{{ `${item.name} (${item.username})` }}</v-list-item-title>
             <v-list-item-subtitle>
@@ -29,18 +30,27 @@
 </template>
 
 <script>
-export default {
-  name: 'users',
-  async asyncData({$axios, error, params}) {
-    let users = await $axios.$get('https://jsonplaceholder.typicode.com/users')
-    return {
-      users
+  import { mapState, mapMutations, mapActions, mapGetters  } from 'vuex'
+  export default {
+    name: 'users',
+    async fetch({store}){
+      await store.dispatch('users/updateUsersList')
+    },
+    computed: {
+      ...mapState('users',{
+        pageTitle: 'myTitle',
+        users: 'list'
+      })
+    },
+    methods: {
+      ...mapMutations('users',[
+        'setUsersList'
+      ]),
+      ...mapActions('users',[
+        'updateUsersList'
+      ])
     }
-  },
-  data: () => ({
-    pageTitle: 'Users page'
-  }),
-}
+  }
 </script>
 
 <style src="@/assets/style2.css"></style>

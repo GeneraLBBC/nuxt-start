@@ -9,13 +9,21 @@
           <h1>{{ user.name }}</h1>
           <h3>{{ user.email }}</h3>
           <h3>{{ user.phone }}</h3>
-          <pre>{{ user }}</pre>
         </v-card-text>
       </v-card>
     </v-col>
     <v-col lg="6">
       <v-list three-line elevation="5">
-        <v-subheader><h1>{{ `${user.name} posts` }}</h1></v-subheader>
+        <v-subheader>
+          <h1>
+            {{ `${user.name} posts` }}
+          </h1>
+          <v-btn
+            dark
+            color="green"
+            class="ml-4"
+          >Add post</v-btn>
+        </v-subheader>
         <v-divider></v-divider>
         <template v-for="item in posts">
           <v-list-item
