@@ -6,6 +6,9 @@ export const state = () => ({
 export const mutations = {
   setUsersList(state, list) {
     state.list = list
+  },
+  addUser(state, usersAd) {
+    state.list.push(usersAd)
   }
 }
 

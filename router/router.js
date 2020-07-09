@@ -36,12 +36,12 @@ export function createRouter () {
         name: 'auth_login',
         component:() => import('@/pages/auth/login').then(m => m.default || m)
       },
-      /*{
-        path: '/error',
-        name: 'error',
-        component:() => import('@/pages/error/index').then(m => m.default || m),
+      {
+        path: '/formview',
+        name: 'formview',
+        component:() => import('@/pages/dashboard/formview.vue').then(m => m.default || m),
       },
-      {path: '*', redirect: {name: "error"}}*/
+      /*{path: '*', redirect: {name: "error"}}*/
     ],
     scrollBehavior (to, from, savedPosition) {
       return new Promise((resolve, reject) => {
