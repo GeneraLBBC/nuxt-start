@@ -23,7 +23,7 @@
             <v-dialog v-model="dialog"  max-width="600px">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  color="primary"
+                  color="green darken-1"
                   dark
                   v-bind="attrs"
                   v-on="on"
@@ -52,8 +52,8 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                  <v-btn color="blue darken-1" text @click="dialogSave = false">Save</v-btn>
+                  <v-btn dark color="red" @click="dialog = false">Close</v-btn>
+                  <v-btn dark color="green" @click="dialogSave = false">Save</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
