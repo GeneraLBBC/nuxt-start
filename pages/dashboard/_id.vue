@@ -33,27 +33,39 @@
               </template>
               <v-card>
                 <v-card-title>
-                  <span class="headline">User Profile</span>
+                  <span class="headline">Add a Post</span>
                 </v-card-title>
                 <v-card-text>
                   <v-container>
-                    <v-row>
+                    <v-form
+                      ref="form"
+                      v-model="valid"
+                      :lazy-validation="lazy"
+                    >
                       <v-col cols="12">
-                        <v-text-field label="Name" type="tetx" required></v-text-field>
+                        <v-text-field label="ID" type="number" required></v-text-field>
                       </v-col>
                       <v-col cols="12">
-                        <v-text-field label="Email*" type="email" required></v-text-field>
+                        <v-text-field label="Title*" type="text" required></v-text-field>
                       </v-col>
                       <v-col cols="12">
-                        <v-text-field label="Password*" type="password" required></v-text-field>
+                        <v-textarea
+                          outlined
+                          name="input-7-4"
+                          label="Enter the text."
+                          
+                        ></v-textarea>
                       </v-col>
-                    </v-row>
+                    </v-form>
                   </v-container>
                 </v-card-text>
                 <v-card-actions>
+                  <v-btn dark color="error" class="mr-4" @click="reset">
+                    Reset Form
+                  </v-btn>
                   <v-spacer></v-spacer>
                   <v-btn dark color="red" @click="dialog = false">Close</v-btn>
-                  <v-btn dark color="green" @click="dialogSave = false">Save</v-btn>
+                  <v-btn dark color="green" @click="onSubmit">Save</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -67,7 +79,7 @@
             @click=""
           >
             <v-list-item-content>
-              <v-list-item-title>{{ item.id }}: {{ item.title }}</v-list-item-title>
+              <v-list-item-title>{{ item.id }}. {{ item.title }}</v-list-item-title>
               <v-list-item-subtitle>
                 {{ item.body }}
               </v-list-item-subtitle>
@@ -93,8 +105,17 @@ export default {
     }
   },
   data: () => ({
-    pageTitile: 'This id page'
-  })
+    pageTitile: 'This id page',
+    dialog: false,
+  }),
+  methods: {
+    reset () {
+      this.$refs.form.reset()
+    },
+    onSubmit() {
+      
+    }
+  }
 }
 </script>
 
