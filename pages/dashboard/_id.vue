@@ -53,7 +53,7 @@
                           outlined
                           name="input-7-4"
                           label="Enter the text."
-                          
+                          type="text"
                         ></v-textarea>
                       </v-col>
                     </v-form>
@@ -113,7 +113,10 @@ export default {
       this.$refs.form.reset()
     },
     onSubmit() {
-      
+      let formPost = {
+        id: this.id
+
+      }
     }
   }
 }
