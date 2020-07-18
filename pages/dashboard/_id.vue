@@ -19,56 +19,13 @@
             {{ `${user.name} posts` }}
           </h1>
           <v-row justify="center">
-
-            <v-dialog v-model="dialog"  max-width="600px">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="green darken-1"
-                  dark
-                  v-bind="attrs"
-                  v-on="on"
-                >
-                  Add posts
-                </v-btn>
-              </template>
-              <v-card>
-                <v-card-title>
-                  <span class="headline">Add a Post</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-form
-                      ref="form"
-                      v-model="valid"
-                      :lazy-validation="lazy"
-                    >
-                      <v-col cols="12">
-                        <v-text-field label="ID" type="number" required></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field label="Title*" type="text" required></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-textarea
-                          outlined
-                          name="input-7-4"
-                          label="Enter the text."
-                          type="text"
-                        ></v-textarea>
-                      </v-col>
-                    </v-form>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <v-btn dark color="error" class="mr-4" @click="reset">
-                    Reset Form
-                  </v-btn>
-                  <v-spacer></v-spacer>
-                  <v-btn dark color="red" @click="dialog = false">Close</v-btn>
-                  <v-btn dark color="green" @click="onSubmit">Save</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
+            <v-btn
+              color="green darken-1"
+              dark
+              @click="dialog = true"
+            >
+              Add posts
+            </v-btn>
           </v-row>
 
         </v-subheader>
@@ -89,6 +46,49 @@
         </template>
       </v-list>
     </v-col>
+
+    <!-- DIALOGS -->
+    <v-dialog v-model="dialog"  max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Add a Post</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-form
+              ref="postForm"
+              v-model="postForm"
+              lazy-validation
+            >
+              <v-row>
+                <v-col lg="12">
+                  <v-text-field
+                    v-model="formFields.title"
+                    label="Title"
+                    :rules="[formRules.required]"
+                  ></v-text-field>
+                </v-col>
+                <v-col lg="12">
+                  <v-text-field
+                    v-model="formFields.body"
+                    label="Text"
+                    :rules="[formRules.required]"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn dark color="error" class="mr-4" @click="reset">
+            Reset Form
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn dark color="red" @click="dialog = false">Close</v-btn>
+          <v-btn dark color="green" @click="onSubmit">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-row>
 </template>
 
@@ -105,17 +105,31 @@ export default {
     }
   },
   data: () => ({
-    pageTitile: 'This id page',
+    pageTitle: 'This id page',
     dialog: false,
+    postForm: null,
+    formFields: {
+      title: '',
+      body: '',
+      userId: null
+    },
+    formRules: {
+      required: value => !!value || "Это поле обязательно к заполнению"
+    }
   }),
   methods: {
     reset () {
-      this.$refs.form.reset()
+      this.$refs.postForm.reset()
     },
     onSubmit() {
-      let formPost = {
-        id: this.id
-
+      if (this.$refs.postForm.validate()) {
+        this.formFields.userId = this.user.id
+        this.$axios.$post('https://jsonplaceholder.typicode.com/users', this.formFields)
+          .then(res => {
+            this.posts.unshift(res.data)
+            this.$refs.postForm.reset()
+            this.dialog = false
+          })
       }
     }
   }
