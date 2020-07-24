@@ -124,7 +124,7 @@ export default {
     onSubmit() {
       if (this.$refs.postForm.validate()) {
         this.formFields.userId = this.user.id
-        this.$axios.$post('https://jsonplaceholder.typicode.com/users', this.formFields)
+        this.$axios.$post('https://jsonplaceholder.typicode.com/posts', this.formFields)
           .then(res => {
             this.posts.unshift(res.data)
             this.$refs.postForm.reset()
